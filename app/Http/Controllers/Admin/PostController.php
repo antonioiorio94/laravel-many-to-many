@@ -52,17 +52,26 @@ class PostController extends Controller
         $request->validate([
             'title'=>'required|max:250',
             'content'=>'required',
-            'category_id'=>'required|exists:categories,id'
+            'category_id'=>'required|exists:categories,id',
+            'tags'=>'exists:tags,id'
         ],[
             'title'=>'Il titolo deve essere valorizzato',
             'content.min'=>'Inserisci minimo 5 caratteri',
-            'category_id.exists' => 'La categoria selezionata non esiste'
+            'category_id.exists' => 'La categoria selezionata non esiste',
+            'tags'=>'Tag non selezionato'
         ]);
         $postData = $request->all();
         $newPost = new Post();
         $newPost->fill($postData);
 
         $newPost->slug = Post::convertToSlug($newPost->title);
+        $newPost->save();
+
+        if(array_key_exists('tags',$postData)){
+
+            $newPost->tags()->sync($postData['tags']);
+        }
+
 
         $newPost->save();
         return redirect()->route('admin.posts.index');
