@@ -15,7 +15,7 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         //
-        $tags = ['routine','lifestyle','viaggi','Wellness'];
+        $tags = ['routine','lifestyle','viaggi'];
 
         foreach($tags as $tag) {
             $new_tag = new Tag();

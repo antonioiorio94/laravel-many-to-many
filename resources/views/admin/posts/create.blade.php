@@ -68,6 +68,24 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                     </div>
+
+                    <div class="form-group">
+                        <div>Tags</div>
+                        @foreach ($tags as $tag )
+                            <input class="form-check-input" type="checkbox" value="{{$tag->id}}" name="tags[]" />
+                            <div class="form-check-label">{{$tag->name}}</div>
+
+                        @endforeach
+
+                    @error('tags[]')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    </div>
+
+
+
+
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">
                             Crea post
