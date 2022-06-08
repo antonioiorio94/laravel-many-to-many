@@ -16,6 +16,7 @@
                             <th>ID</th>
                             <th>Titolo</th>
                             <th>Slug</th>
+                            <th>Tags</th>
                             <th class="text-center">Azioni</th>
                         </tr>
                     </thead>
@@ -24,6 +25,11 @@
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
+                                <td>
+                                    @foreach ($post->tags as $tag )
+                                        <span>{{$tag->name}} </span>
+
+                                    @endforeach</td>
                                 <td>{{ $post->slug }}</td>
                                 <td>
                                     <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}"

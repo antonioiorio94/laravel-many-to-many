@@ -143,6 +143,8 @@ class PostController extends Controller
 
         if(array_key_exists('tags',$postData)){
             $post->tags()->sync($postData['tags']);
+        }else{
+            $post->tags()->sync([]);
         }
 
         $post->update();
@@ -160,6 +162,9 @@ class PostController extends Controller
     {
         //
         if($post){
+
+            $post->tags()->sync([]);
+
             $post->delete();
         }
 
