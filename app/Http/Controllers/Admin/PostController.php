@@ -111,8 +111,9 @@ class PostController extends Controller
         }
 
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories','tags'));
     }
 
     /**
@@ -132,12 +133,17 @@ class PostController extends Controller
         ], [
             'title'=>'Il titolo deve essere valorizzato',
             'content.min'=>'Inserisci minimo 5 caratteri',
-            'category_id.exists' => 'La categoria selezionata non esiste'
+            'category_id.exists' => 'La categoria selezionata non esiste',
+            'tags'=>'Il tag non è selezionato'
         ]);
         $postData = $request->all();
 
         $post->fill($postData);
         $post->slug = Post::convertToSlug($post->title);
+
+        if(array_key_exists('tags',$postData)){
+            $post->tags()->sync($postData['tags']);
+        }
 
         $post->update();
         return redirect()->route('admin.posts.index');
